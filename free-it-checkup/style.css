@@ -17,3 +17,28 @@ textarea::placeholder {
 textarea {
   resize: vertical;
 }
+input,
+textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.08);
+  color: var(--white);
+  border-radius: 16px;
+  padding: 16px;
+  font: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted);
+}
+
+textarea {
+  resize: vertical;
+}
+
+form.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
