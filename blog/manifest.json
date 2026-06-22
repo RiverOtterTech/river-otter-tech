@@ -1,5 +1,10 @@
 [
   {
+    "title": "New Post",
+    "slug": "new-post",
+    "date": "June 22, 2026"
+  },
+  {
     "title": "How to Effectively Set Up and Manage Remote Printers for Your Small Business",
     "slug": "how-to-set-up-remote-printers-for-your-small-business",
     "date": "June 22, 2026"
