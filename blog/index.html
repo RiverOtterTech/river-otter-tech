@@ -1,311 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Blog | River Otter Tech</title>
-  <meta name="description" content="Practical IT tips and guides for small businesses and nonprofits from River Otter Tech." />
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <style>
-    :root { --navy: #071e2e; --navy-dark: #040f1a; --navy-mid: #0d2840; --cyan: #38bdf8; --cyan-dim: #0ea5e9; --white: #ffffff; --muted: #94a3b8; --border: rgba(255,255,255,0.10); --border-cyan: rgba(56,189,248,0.25); }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; background: var(--navy-dark); color: var(--white); overflow-x: hidden; }
-    a { color: inherit; text-decoration: none; }
-    #aurora-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-    #particle-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.5; }
-    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; transition: background 0.4s ease; }
-    .nav.scrolled { background: rgba(4,15,26,0.82); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
-    .nav-inner { width: min(100% - 48px, 1280px); margin: 0 auto; padding: 20px 0; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-    .brand { display: flex; align-items: center; gap: 12px; }
-    .brand img { width: 52px; height: auto; }
-    .brand-text strong { display: block; font-size: 17px; font-weight: 800; letter-spacing: -0.02em; }
-    .brand-text span { display: block; color: var(--muted); font-size: 11px; margin-top: 2px; letter-spacing: 0.04em; }
-    .nav-links { display: flex; gap: 28px; color: var(--muted); font-size: 14px; font-weight: 500; }
-    .nav-links a { transition: color 0.2s; }
-    .nav-links a:hover { color: var(--white); }
-    .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 42px; padding: 0 22px; border-radius: 999px; font-weight: 700; font-size: 14px; border: none; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; font-family: inherit; }
-    .btn:hover { transform: translateY(-2px); }
-    .btn-cyan { background: var(--cyan); color: var(--navy-dark); box-shadow: 0 0 24px rgba(56,189,248,0.35); }
-    .btn-cyan:hover { background: #7dd3fc; box-shadow: 0 0 36px rgba(56,189,248,0.55); }
-    .page-wrap { position: relative; z-index: 1; width: min(100% - 48px, 1280px); margin: 0 auto; padding: 140px 0 80px; }
-    .section-eyebrow { font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan); margin-bottom: 12px; }
-    .section-title { font-size: clamp(36px, 5vw, 60px); font-weight: 900; letter-spacing: -0.04em; line-height: 0.97; margin-bottom: 16px; }
-    .section-sub { color: var(--muted); font-size: 17px; line-height: 1.7; max-width: 580px; margin-bottom: 56px; }
-    .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
-    .post-card { border: 1px solid var(--border); background: rgba(255,255,255,0.04); border-radius: 24px; padding: 28px; transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; cursor: pointer; display: block; }
-    .post-card:hover { transform: translateY(-6px); background: rgba(56,189,248,0.06); border-color: var(--border-cyan); box-shadow: 0 20px 50px rgba(0,0,0,0.3), 0 0 30px rgba(56,189,248,0.08); }
-    .post-card-meta { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; }
-    .post-card-title { font-size: 19px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px; line-height: 1.3; }
-    .post-card-teaser { color: var(--muted); font-size: 15px; line-height: 1.6; margin-bottom: 18px; }
-    .post-card-cta { font-size: 13px; font-weight: 700; color: var(--cyan); }
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    footer { position: relative; z-index: 1; width: min(100% - 48px, 1280px); margin: 0 auto; padding: 32px 0 48px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; }
-    .footer-brand { display: flex; align-items: center; gap: 10px; }
-    .footer-brand img { width: 36px; }
-    .footer-brand span { font-weight: 700; color: var(--white); }
-    @media (max-width: 720px) { .nav-links { display: none; } .posts-grid { grid-template-columns: 1fr; } footer { flex-direction: column; gap: 12px; text-align: center; } }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Blog | River Otter Tech</title>
+<meta name="description" content="Practical IT tips and guides for small businesses and nonprofits from River Otter Tech."/>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
-  <canvas id="aurora-canvas"></canvas>
-  <canvas id="particle-canvas"></canvas>
-  <header class="nav" id="main-nav">
-    <div class="nav-inner">
-      <a class="brand" href="/">
-        <img src="/logo.png" alt="River Otter Tech logo" />
-        <div class="brand-text">
-          <strong>River Otter Tech</strong>
-          <span>Simple IT for small offices</span>
-        </div>
-      </a>
-      <nav class="nav-links">
-        <a href="/">Home</a>
+  <div class="grid-bg"></div>
+  <div class="glow a"></div><div class="glow b"></div>
+  <canvas id="topo"></canvas>
+
+  <header class="nav" id="nav">
+    <div class="wrap">
+      <div class="nav-inner">
+        <a class="brand" href="/">
+          <img src="https://raw.githubusercontent.com/RiverOtterTech/river-otter-tech/main/logo.png" alt="River Otter Tech logo"/>
+          <div><strong>River Otter Tech</strong><span>WHITE-LABEL NETWORK OPS</span></div>
+        </a>
+        <nav class="nav-links">
+          <a href="/services/">Services</a>
+          <a href="/how-it-works/">How it works</a>
+          <a href="/test-ticket/">Free test ticket</a>
+          <a href="/about/">About</a>
+          <a href="/business/">For businesses</a>
+          <a href="/blog/" class="active" aria-current="page">Blog</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+        <a class="btn btn-cyan nav-cta" href="https://calendar.app.google/yBfTM3FdcwxK4nQf6" target="_blank" rel="noopener">Book a partner call</a>
+        <button class="menu-btn" id="menu-btn" aria-label="Menu">&#9776;</button>
+      </div>
+      <nav class="mobile-menu" id="mobile-menu">
+        <a href="/services/">Services</a>
+        <a href="/how-it-works/">How it works</a>
+        <a href="/test-ticket/">Free test ticket</a>
         <a href="/about/">About</a>
-        <a href="/business/#services">Services</a>
-        <a href="/business/#pricing">Plans</a>
-        <a href="/blog/">Blog</a>
-        <a href="/#contact">Contact</a>
+        <a href="/business/">For businesses</a>
+        <a href="/blog/" class="active">Blog</a>
+        <a href="/contact/">Contact</a>
+        <a href="https://calendar.app.google/yBfTM3FdcwxK4nQf6" target="_blank" rel="noopener" style="color:var(--cyan)">Book a partner call &rarr;</a>
       </nav>
-      <a class="btn btn-cyan" href="/#contact">Get Help</a>
     </div>
   </header>
+
   <main>
-    <div class="page-wrap">
+    <section class="wrap page-hero">
       <div class="reveal">
-        <div class="section-eyebrow">Resources</div>
-        <h1 class="section-title">IT Tips &amp; Guides</h1>
-        <p class="section-sub">Practical advice for small businesses, nonprofits, and local offices &mdash; written in plain English.</p>
-      </div>
-      <div class="posts-grid">
+        <div class="eyebrow">blog</div>
+        <h1 class="title">IT tips &amp; guides</h1>
+        <p class="sub">Practical, plain-English advice on keeping a small office secure and running.</p>
         
-  <a href="/blog/protect-your-small-business-from-ransomware/" class="post-card reveal" style="transition-delay:0s">
-    <div class="post-card-inner">
-      <div class="post-card-meta">River Otter Tech</div>
-      <h2 class="post-card-title">Protect Your Small Business From Ransomware</h2>
-      
-      <span class="post-card-cta">Read more &rarr;</span>
-    </div>
-  </a>
-  <a href="/blog/protect-your-business-with-strong-passwords-teach/" class="post-card reveal" style="transition-delay:0.07s">
-    <div class="post-card-inner">
-      <div class="post-card-meta">River Otter Tech</div>
-      <h2 class="post-card-title">Protect Your Business With Strong Passwords Teach</h2>
-      
-      <span class="post-card-cta">Read more &rarr;</span>
-    </div>
-  </a>
-  <a href="/blog/how-to-set-up-remote-work-for-your-small-business-safely/" class="post-card reveal" style="transition-delay:0.14s">
-    <div class="post-card-inner">
-      <div class="post-card-meta">River Otter Tech</div>
-      <h2 class="post-card-title">How To Set Up Remote Work For Your Small Business Safely</h2>
-      
-      <span class="post-card-cta">Read more &rarr;</span>
-    </div>
-  </a>
-  <a href="/blog/how-to-set-up-remote-printers-for-your-small-business/" class="post-card reveal" style="transition-delay:0.21000000000000002s">
-    <div class="post-card-inner">
-      <div class="post-card-meta">River Otter Tech</div>
-      <h2 class="post-card-title">How To Set Up Remote Printers For Your Small Business</h2>
-      
-      <span class="post-card-cta">Read more &rarr;</span>
-    </div>
-  </a>
-  <a href="/blog/how-to-set-up-effective-backups-for-your-small-business/" class="post-card reveal" style="transition-delay:0.28s">
-    <div class="post-card-inner">
-      <div class="post-card-meta">River Otter Tech</div>
-      <h2 class="post-card-title">How To Set Up Effective Backups For Your Small Business</h2>
-      
-      <span class="post-card-cta">Read more &rarr;</span>
-    </div>
-  </a>
-  <a href="/blog/how-to-secure-your-small-business-with-mfa/" class="post-card reveal" style="transition-delay:0.35000000000000003s">
-    <div class="post-card-inner">
-      <div class="post-card-meta">River Otter Tech</div>
-      <h2 class="post-card-title">How To Secure Your Small Business With Mfa</h2>
-      
-      <span class="post-card-cta">Read more &rarr;</span>
-    </div>
-  </a>
-  <a href="/blog/how-to-secure-your-email-from-phishing-attacks/" class="post-card reveal" style="transition-delay:0.42000000000000004s">
-    <div class="post-card-inner">
-      <div class="post-card-meta">River Otter Tech</div>
-      <h2 class="post-card-title">How To Secure Your Email From Phishing Attacks</h2>
-      
-      <span class="post-card-cta">Read more &rarr;</span>
-    </div>
-  </a>
-  <a href="/blog/how-to-secure-email-from-phishing-attacks/" class="post-card reveal" style="transition-delay:0.49000000000000005s">
-    <div class="post-card-inner">
-      <div class="post-card-meta">River Otter Tech</div>
-      <h2 class="post-card-title">How To Secure Email From Phishing Attacks</h2>
-      
-      <span class="post-card-cta">Read more &rarr;</span>
-    </div>
-  </a>
-  <a href="/blog/how-to-safely-use-public-wi-fi-for-your-small-business/" class="post-card reveal" style="transition-delay:0.56s">
-    <div class="post-card-inner">
-      <div class="post-card-meta">River Otter Tech</div>
-      <h2 class="post-card-title">How To Safely Use Public Wi Fi For Your Small Business</h2>
-      
-      <span class="post-card-cta">Read more &rarr;</span>
-    </div>
-  </a>
-  <a href="/blog/how-to-safeguard-your-small-business-from-ransomware-attacks/" class="post-card reveal" style="transition-delay:0.6300000000000001s">
-    <div class="post-card-inner">
-      <div class="post-card-meta">June 25, 2026</div>
-      <h2 class="post-card-title">How to Safeguard Your Small Business from Ransomware Attacks</h2>
-      <p class="post-card-teaser">Ransomware attacks can be devastating for small businesses. Learn how to protect your data and keep your business running smoothly with these essential tips.</p>
-      <span class="post-card-cta">Read more &rarr;</span>
-    </div>
-  </a>
-  <a href="/blog/how-to-safeguard-your-small-business-data-with-efficient-backup-strategies/" class="post-card reveal" style="transition-delay:0.7000000000000001s">
-    <div class="post-card-inner">
-      <div class="post-card-meta">River Otter Tech</div>
-      <h2 class="post-card-title">How To Safeguard Your Small Business Data With Efficient Backup Strategies</h2>
-      
-      <span class="post-card-cta">Read more &rarr;</span>
-    </div>
-  </a>
-  <a href="/blog/how-to-safeguard-your-small-business-data/" class="post-card reveal" style="transition-delay:0.77s">
-    <div class="post-card-inner">
-      <div class="post-card-meta">River Otter Tech</div>
-      <h2 class="post-card-title">How To Safeguard Your Small Business Data</h2>
-      
-      <span class="post-card-cta">Read more &rarr;</span>
-    </div>
-  </a>
-  <a href="/blog/how-to-onboard-new-employees-in-small-business/" class="post-card reveal" style="transition-delay:0.8400000000000001s">
-    <div class="post-card-inner">
-      <div class="post-card-meta">River Otter Tech</div>
-      <h2 class="post-card-title">How To Onboard New Employees In Small Business</h2>
-      
-      <span class="post-card-cta">Read more &rarr;</span>
-    </div>
-  </a>
-  <a href="/blog/how-to-onboard-new-employees/" class="post-card reveal" style="transition-delay:0.9100000000000001s">
-    <div class="post-card-inner">
-      <div class="post-card-meta">River Otter Tech</div>
-      <h2 class="post-card-title">How To Onboard New Employees</h2>
-      
-      <span class="post-card-cta">Read more &rarr;</span>
-    </div>
-  </a>
-  <a href="/blog/how-to-manage-vendor-relationships/" class="post-card reveal" style="transition-delay:0.9800000000000001s">
-    <div class="post-card-inner">
-      <div class="post-card-meta">River Otter Tech</div>
-      <h2 class="post-card-title">How To Manage Vendor Relationships</h2>
-      
-      <span class="post-card-cta">Read more &rarr;</span>
-    </div>
-  </a>
-  <a href="/blog/how-to-keep-your-small-business-network-secure-from-phishing-attacks/" class="post-card reveal" style="transition-delay:1.05s">
-    <div class="post-card-inner">
-      <div class="post-card-meta">River Otter Tech</div>
-      <h2 class="post-card-title">How To Keep Your Small Business Network Secure From Phishing Attacks</h2>
-      
-      <span class="post-card-cta">Read more &rarr;</span>
-    </div>
-  </a>
-  <a href="/blog/how-to-improve-wifi-security-and-performance/" class="post-card reveal" style="transition-delay:1.12s">
-    <div class="post-card-inner">
-      <div class="post-card-meta">River Otter Tech</div>
-      <h2 class="post-card-title">How To Improve Wifi Security And Performance</h2>
-      
-      <span class="post-card-cta">Read more &rarr;</span>
-    </div>
-  </a>
-  <a href="/blog/how-to-effectively-manage-your-small-businesss-it-budget/" class="post-card reveal" style="transition-delay:1.1900000000000002s">
-    <div class="post-card-inner">
-      <div class="post-card-meta">River Otter Tech</div>
-      <h2 class="post-card-title">How To Effectively Manage Your Small Businesss It Budget</h2>
-      
-      <span class="post-card-cta">Read more &rarr;</span>
-    </div>
-  </a>
-  <a href="/blog/how-to-choose-cloud-service-for-small-business/" class="post-card reveal" style="transition-delay:1.2600000000000002s">
-    <div class="post-card-inner">
-      <div class="post-card-meta">River Otter Tech</div>
-      <h2 class="post-card-title">How To Choose Cloud Service For Small Business</h2>
-      
-      <span class="post-card-cta">Read more &rarr;</span>
-    </div>
-  </a>
       </div>
-    </div>
+    </section>
+    <section class="wrap section" style="padding-top:40px">
+      <div class="post-grid">
+        <a class="post-card2 reveal" href="/blog/protect-your-small-business-from-ransomware/" style="transition-delay:0.00s">
+          <div class="pc-meta mono"><span>June 18, 2026</span><span>1 min</span></div>
+          <h2>How to Protect Your Small Business from Ransomware Attacks</h2>
+          <p>Ransomware is a type of malware that encrypts your files and demands payment in exchange for the decryption key. These attacks are on the rise,…</p>
+          <span class="route-go mono">read &rarr;</span>
+        </a>
+        <a class="post-card2 reveal" href="/blog/protect-your-business-with-strong-passwords-teach/" style="transition-delay:0.05s">
+          <div class="pc-meta mono"><span>June 22, 2026</span><span>2 min</span></div>
+          <h2>Protect Your Business with Strong Passwords</h2>
+          <p>Strong passwords are like a fortress protecting your business’s sensitive data. However, many small businesses struggle with password management,…</p>
+          <span class="route-go mono">read &rarr;</span>
+        </a>
+        <a class="post-card2 reveal" href="/blog/how-to-set-up-remote-work-for-your-small-business-safely/" style="transition-delay:0.10s">
+          <div class="pc-meta mono"><span>June 17, 2026</span><span>2 min</span></div>
+          <h2>How to Set Up Remote Work for Your Small Business Safely</h2>
+          <p>Working remotely has become a common practice in today&#x27;s business landscape. It offers employees greater flexibility while keeping the business…</p>
+          <span class="route-go mono">read &rarr;</span>
+        </a>
+        <a class="post-card2 reveal" href="/blog/how-to-set-up-remote-printers-for-your-small-business/" style="transition-delay:0.00s">
+          <div class="pc-meta mono"><span>June 22, 2026</span><span>2 min</span></div>
+          <h2>How to Effectively Set Up and Manage Remote Printers for Your Small Business</h2>
+          <p>Remote printing is essential for small businesses that have employees who work from home or are distributed across multiple locations. However,…</p>
+          <span class="route-go mono">read &rarr;</span>
+        </a>
+        <a class="post-card2 reveal" href="/blog/how-to-set-up-effective-backups-for-your-small-business/" style="transition-delay:0.05s">
+          <div class="pc-meta mono"><span>June 17, 2026</span><span>2 min</span></div>
+          <h2>How to Set Up Effective Backups for Your Small Business</h2>
+          <p>Backing up your data is one of the most important steps you can take to protect your small business from data loss. Whether it&#x27;s customer records,…</p>
+          <span class="route-go mono">read &rarr;</span>
+        </a>
+        <a class="post-card2 reveal" href="/blog/how-to-secure-your-small-business-with-mfa/" style="transition-delay:0.10s">
+          <div class="pc-meta mono"><span>June 17, 2026</span><span>2 min</span></div>
+          <h2>How to Secure Your Small Business with Multi-Factor Authentication (MFA)</h2>
+          <p>As a small business owner, you wear many hats. Keeping track of passwords for various platforms can be overwhelming, but it’s crucial for maintaining…</p>
+          <span class="route-go mono">read &rarr;</span>
+        </a>
+        <a class="post-card2 reveal" href="/blog/how-to-secure-your-email-from-phishing-attacks/" style="transition-delay:0.00s">
+          <div class="pc-meta mono"><span>June 20, 2026</span><span>2 min</span></div>
+          <h2>How to Secure Your Small Business’s Email from Phishing Attacks</h2>
+          <p>Phishing attacks are a significant threat to any small business, posing risks from both external hackers and even within the organization. These…</p>
+          <span class="route-go mono">read &rarr;</span>
+        </a>
+        <a class="post-card2 reveal" href="/blog/how-to-secure-email-from-phishing-attacks/" style="transition-delay:0.05s">
+          <div class="pc-meta mono"><span>June 17, 2026</span><span>2 min</span></div>
+          <h2>How to Secure Your Small Business’s Email from Phishing Attacks</h2>
+          <p>Phishing attacks are a serious threat for small businesses, often leading to data breaches or financial losses. By securing your email systems, you…</p>
+          <span class="route-go mono">read &rarr;</span>
+        </a>
+        <a class="post-card2 reveal" href="/blog/how-to-safely-use-public-wi-fi-for-your-small-business/" style="transition-delay:0.10s">
+          <div class="pc-meta mono"><span>June 20, 2026</span><span>1 min</span></div>
+          <h2>How to Safely Use Public Wi-Fi for Your Small Business</h2>
+          <p>Public Wi-Fi networks are everywhere – in coffee shops, airports, and even parks. They&#x27;re convenient for checking emails or running a quick report,…</p>
+          <span class="route-go mono">read &rarr;</span>
+        </a>
+        <a class="post-card2 reveal" href="/blog/how-to-safeguard-your-small-business-from-ransomware-attacks/" style="transition-delay:0.00s">
+          <div class="pc-meta mono"><span>June 25, 2026</span><span>2 min</span></div>
+          <h2>How to Safeguard Your Small Business from Ransomware Attacks</h2>
+          <p>Ransomware attacks are a growing threat, not just to large corporations but also to small businesses. These cyber attacks encrypt your files, making…</p>
+          <span class="route-go mono">read &rarr;</span>
+        </a>
+        <a class="post-card2 reveal" href="/blog/how-to-safeguard-your-small-business-data-with-efficient-backup-strategies/" style="transition-delay:0.05s">
+          <div class="pc-meta mono"><span>June 22, 2026</span><span>2 min</span></div>
+          <h2>How to Safeguard Your Small Business Data with Efficient Backup Strategies</h2>
+          <p>Backups are often seen as an afterthought in small businesses until it&#x27;s too late. A robust backup strategy ensures that you don’t lose important…</p>
+          <span class="route-go mono">read &rarr;</span>
+        </a>
+        <a class="post-card2 reveal" href="/blog/how-to-safeguard-your-small-business-data/" style="transition-delay:0.10s">
+          <div class="pc-meta mono"><span>June 22, 2026</span><span>2 min</span></div>
+          <h2>How to Safeguard Your Small Business Data with Efficient Backup Strategies</h2>
+          <p>Backing up your data is one of the most important steps you can take to protect your small business from a myriad of potential threats, including…</p>
+          <span class="route-go mono">read &rarr;</span>
+        </a>
+        <a class="post-card2 reveal" href="/blog/how-to-onboard-new-employees-in-small-business/" style="transition-delay:0.00s">
+          <div class="pc-meta mono"><span>June 17, 2026</span><span>2 min</span></div>
+          <h2>How to Effectively Onboard New Employees in Your Small Business</h2>
+          <p>Onboarding a new employee can seem daunting for small business owners who are already stretched thin. But with the right preparation and tools, it…</p>
+          <span class="route-go mono">read &rarr;</span>
+        </a>
+        <a class="post-card2 reveal" href="/blog/how-to-onboard-new-employees/" style="transition-delay:0.05s">
+          <div class="pc-meta mono"><span>June 22, 2026</span><span>2 min</span></div>
+          <h2>How to Effectively Onboard New Employees in Your Small Business</h2>
+          <p>When a new employee joins your small business, the goal is to ensure they feel welcomed and ready to contribute right away. Effective onboarding not…</p>
+          <span class="route-go mono">read &rarr;</span>
+        </a>
+        <a class="post-card2 reveal" href="/blog/how-to-manage-vendor-relationships/" style="transition-delay:0.10s">
+          <div class="pc-meta mono"><span>June 18, 2026</span><span>2 min</span></div>
+          <h2>How to Effectively Manage Your Small Business’s Vendor Relationships</h2>
+          <p>Managing vendors in a small business can be both rewarding and challenging. A well-managed relationship with suppliers, software providers, or…</p>
+          <span class="route-go mono">read &rarr;</span>
+        </a>
+        <a class="post-card2 reveal" href="/blog/how-to-keep-your-small-business-network-secure-from-phishing-attacks/" style="transition-delay:0.00s">
+          <div class="pc-meta mono"><span>June 17, 2026</span><span>2 min</span></div>
+          <h2>How to Keep Your Small Business Network Secure from Phishing Attacks</h2>
+          <p>Phishing attacks are a common threat faced by businesses of all sizes, including small offices. These sophisticated scams can trick even the most…</p>
+          <span class="route-go mono">read &rarr;</span>
+        </a>
+        <a class="post-card2 reveal" href="/blog/how-to-improve-wifi-security-and-performance/" style="transition-delay:0.05s">
+          <div class="pc-meta mono"><span>June 17, 2026</span><span>2 min</span></div>
+          <h2>How to Improve Your Small Business’s Wi-Fi Security and Performance</h2>
+          <p>Wi-Fi isn&#x27;t just about getting online quickly; it’s also a critical part of your small business&#x27;s security and productivity. A poorly set up or…</p>
+          <span class="route-go mono">read &rarr;</span>
+        </a>
+        <a class="post-card2 reveal" href="/blog/how-to-effectively-manage-your-small-businesss-it-budget/" style="transition-delay:0.10s">
+          <div class="pc-meta mono"><span>June 18, 2026</span><span>2 min</span></div>
+          <h2>How to Effectively Manage Your Small Business’s IT Budget</h2>
+          <p>Running a small business means wearing many hats, including that of an IT manager. However, managing your IT budget effectively is often overlooked…</p>
+          <span class="route-go mono">read &rarr;</span>
+        </a>
+        <a class="post-card2 reveal" href="/blog/how-to-choose-cloud-service-for-small-business/" style="transition-delay:0.00s">
+          <div class="pc-meta mono"><span>June 17, 2026</span><span>2 min</span></div>
+          <h2>How to Choose the Right Cloud Service for Your Small Business</h2>
+          <p>Choosing the right cloud service can be a daunting task, especially when you&#x27;re running a small business with limited IT resources. The two most…</p>
+          <span class="route-go mono">read &rarr;</span>
+        </a>
+      </div>
+    </section>
+    <section class="wrap section">
+      <div class="cta-band reveal">
+        <div>
+          <h2>Got network tickets piling up?</h2>
+          <p>Book a 20-minute partner call, or send us one ticket free and see how we work.</p>
+        </div>
+        <div class="cta-actions">
+          <a class="btn btn-cyan" href="https://calendar.app.google/yBfTM3FdcwxK4nQf6" target="_blank" rel="noopener">Book a partner call &rarr;</a>
+          <a class="btn btn-outline" href="/test-ticket/">Free test ticket</a>
+        </div>
+      </div>
+    </section>
   </main>
+
   <footer>
-    <div class="footer-brand">
-      <img src="/logo.png" alt="" />
-      <span>River Otter Tech</span>
+    <div class="wrap foot">
+      <div class="brand"><img src="https://raw.githubusercontent.com/RiverOtterTech/river-otter-tech/main/logo.png" alt=""/><strong style="font-size:15px">River Otter Tech</strong></div>
+      <nav class="foot-links">
+        <a href="/services/">Services</a><a href="/how-it-works/">How it works</a><a href="/test-ticket/">Free test ticket</a><a href="/about/">About</a><a href="/business/">For businesses</a><a href="/contact/">Contact</a>
+      </nav>
+      <a class="mail" href="mailto:hello@riverottertech.com">hello@riverottertech.com</a>
     </div>
-    <span>&copy; 2025 River Otter Tech &middot; Simple IT for small offices</span>
-    <a href="mailto:jroy@riverottertech.com" style="color:var(--cyan);">jroy@riverottertech.com</a>
+    <div class="wrap foot-copy mono">&copy; 2026 River Otter Tech &middot; White-label network ops for MSPs</div>
   </footer>
-  <script>
-    const nav = document.getElementById('main-nav');
-    window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 40); });
-    (function() {
-      const canvas = document.getElementById('aurora-canvas');
-      const ctx = canvas.getContext('2d');
-      let W, H, t = 0;
-      function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-      window.addEventListener('resize', resize); resize();
-      function draw() {
-        ctx.clearRect(0, 0, W, H);
-        const bg = ctx.createLinearGradient(0, 0, 0, H);
-        bg.addColorStop(0, '#040f1a'); bg.addColorStop(1, '#071e2e');
-        ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
-        const blobs = [
-          { x: 0.15, y: 0.1, r: 0.55, c1: 'rgba(14,165,233,0.13)', c2: 'transparent', speed: 0.00018 },
-          { x: 0.75, y: 0.08, r: 0.45, c1: 'rgba(56,189,248,0.10)', c2: 'transparent', speed: 0.00022 },
-          { x: 0.5, y: 0.6, r: 0.6, c1: 'rgba(7,30,46,0.5)', c2: 'transparent', speed: 0.00015 },
-        ];
-        blobs.forEach((b, i) => {
-          const ox = Math.sin(t * b.speed * 1000 + i * 2.1) * 0.08;
-          const oy = Math.cos(t * b.speed * 1000 + i * 1.7) * 0.05;
-          const gx = (b.x + ox) * W; const gy = (b.y + oy) * H;
-          const gr = b.r * Math.max(W, H);
-          const g = ctx.createRadialGradient(gx, gy, 0, gx, gy, gr);
-          g.addColorStop(0, b.c1); g.addColorStop(1, b.c2);
-          ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-        });
-        t += 16; requestAnimationFrame(draw);
-      }
-      draw();
-    })();
-    (function() {
-      const canvas = document.getElementById('particle-canvas');
-      const ctx = canvas.getContext('2d');
-      let W, H;
-      const particles = [];
-      function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-      window.addEventListener('resize', resize); resize();
-      for (let i = 0; i < 55; i++) { particles.push({ x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight, r: Math.random() * 1.5 + 0.3, vx: (Math.random() - 0.5) * 0.18, vy: (Math.random() - 0.5) * 0.18, alpha: Math.random() * 0.4 + 0.1 }); }
-      function draw() {
-        ctx.clearRect(0, 0, W, H);
-        particles.forEach(p => {
-          p.x += p.vx; p.y += p.vy;
-          if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
-          if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
-          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(56,189,248,' + p.alpha + ')'; ctx.fill();
-        });
-        requestAnimationFrame(draw);
-      }
-      draw();
-    })();
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    reveals.forEach(el => observer.observe(el));
-  </script>
+<script src="/assets/site.js"></script>
 </body>
 </html>
