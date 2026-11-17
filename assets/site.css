@@ -326,3 +326,23 @@
   .ty-contact .detail { margin-top: 0; color: var(--white); }
   .ty-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
   @media (max-width: 720px) { .ty-body { padding: 26px 22px 30px; } .ty-steps { grid-template-columns: 1fr; } .ty { padding-top: 110px; } }
+
+  /* ---- Billing / About v2 ---- */
+  .bill-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .bill { border: 1px solid var(--border); border-radius: 16px; padding: 26px; background: rgba(7,24,38,0.65); backdrop-filter: blur(6px); }
+  .bill span { font-size: 12px; color: var(--cyan); }
+  .bill h3 { font-size: 19px; font-weight: 800; margin: 10px 0 8px; }
+  .bill p { color: var(--muted); font-size: 14.5px; line-height: 1.6; }
+  .about-h { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin: 6px 0 14px; }
+  .about-h:not(:first-child) { margin-top: 34px; }
+  .principles { display: grid; gap: 12px; }
+  .principle { display: flex; gap: 16px; border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; background: rgba(7,24,38,0.65); }
+  .principle > span { color: var(--cyan); font-size: 13px; padding-top: 2px; }
+  .principle b { display: block; font-size: 16px; margin-bottom: 4px; }
+  .principle p { color: var(--muted); font-size: 14px; line-height: 1.55; margin: 0; }
+  @media (max-width: 1050px) { .bill-grid { grid-template-columns: 1fr; } }
+
+  /* ---- Readability: bump tiny mono text ---- */
+  .port, .route-port, .pc-meta, .strip-label, .brand span { font-size: 12px; }
+  .svc li { font-size: 12px; }
+  main { min-height: calc(100vh - 150px); }
