@@ -346,3 +346,5 @@
   .port, .route-port, .pc-meta, .strip-label, .brand span { font-size: 12px; }
   .svc li { font-size: 12px; }
   main { min-height: calc(100vh - 150px); }
+  .term-body { min-height: 0; }
+  @media (max-width: 720px) { .term-body .ln { white-space: pre-wrap; overflow: visible; } }
