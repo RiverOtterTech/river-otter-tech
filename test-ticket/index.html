@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Free Test Ticket | River Otter Tech</title>
+<meta name="description" content="Send River Otter Tech one real network ticket from your queue. We work it remotely under your brand, free, so you can judge the work first."/>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="glow a"></div><div class="glow b"></div>
+  <canvas id="topo"></canvas>
+
+  <header class="nav" id="nav">
+    <div class="wrap">
+      <div class="nav-inner">
+        <a class="brand" href="/">
+          <img src="https://raw.githubusercontent.com/RiverOtterTech/river-otter-tech/main/logo.png" alt="River Otter Tech logo"/>
+          <div><strong>River Otter Tech</strong><span>WHITE-LABEL NETWORK OPS</span></div>
+        </a>
+        <nav class="nav-links">
+          <a href="/services/">Services</a>
+          <a href="/how-it-works/">How it works</a>
+          <a href="/test-ticket/" class="active" aria-current="page">Free test ticket</a>
+          <a href="/about/">About</a>
+          <a href="/business/">For businesses</a>
+          <a href="/blog/">Blog</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+        <a class="btn btn-cyan nav-cta" href="https://calendar.app.google/yBfTM3FdcwxK4nQf6" target="_blank" rel="noopener">Book a partner call</a>
+        <button class="menu-btn" id="menu-btn" aria-label="Menu">&#9776;</button>
+      </div>
+      <nav class="mobile-menu" id="mobile-menu">
+        <a href="/services/">Services</a>
+        <a href="/how-it-works/">How it works</a>
+        <a href="/test-ticket/" class="active">Free test ticket</a>
+        <a href="/about/">About</a>
+        <a href="/business/">For businesses</a>
+        <a href="/blog/">Blog</a>
+        <a href="/contact/">Contact</a>
+        <a href="https://calendar.app.google/yBfTM3FdcwxK4nQf6" target="_blank" rel="noopener" style="color:var(--cyan)">Book a partner call &rarr;</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="wrap page-hero" style="padding-bottom:40px">
+      <div class="offer reveal">
+        <div>
+          <div class="eyebrow">try before you partner</div>
+          <h2>Send us one real network ticket. It's free.</h2>
+          <p>Pick a networking ticket from your queue, ideally one that's been sitting there. We'll work it remotely under your brand and close it out with full notes, so you can judge the work before you commit to anything.</p>
+        </div>
+        <div class="offer-card">
+          <div class="row"><span>cost</span><span class="ok">$0</span></div>
+          <div class="row"><span>scope</span><span>1 remote network ticket</span></div>
+          <div class="row"><span>branding</span><span>yours</span></div>
+          <div class="row"><span>deliverable</span><span>fix + notes + docs</span></div>
+          <div class="row"><span>commitment</span><span>none</span></div>
+          <a class="btn btn-cyan" href="#ticket-form">Claim your test ticket &rarr;</a>
+        </div>
+      </div>
+    </section>
+    <section class="wrap section" id="ticket-form" style="padding-top:40px">
+      <div class="contact reveal">
+        <div>
+          <div class="eyebrow">claim your test ticket</div>
+          <h2>Tell us about the ticket.</h2>
+          <p>Fill this out and we'll reply within one business day to set up access. Rather talk it through first? Book a call instead.</p>
+          <a class="btn btn-outline" href="https://calendar.app.google/yBfTM3FdcwxK4nQf6" target="_blank" rel="noopener">Book a partner call &rarr;</a>
+        </div>
+        <form class="form" id="contact-form">
+          <input type="hidden" name="_subject" value="Free test ticket request"/>
+          <div class="two">
+            <input type="text" name="name" placeholder="Your name" required/>
+            <input type="text" name="company" placeholder="MSP name" required/>
+          </div>
+          <div class="two">
+            <input type="email" name="email" placeholder="Work email" required/>
+            <input type="tel" name="phone" placeholder="Phone"/>
+          </div>
+          <div class="two">
+            <select name="inquiry" id="inquiry" aria-label="What do you need?">
+              <option>Partner inquiry</option>
+              <option selected>Free test ticket</option>
+              <option>Network project quote</option>
+            </select>
+            <input type="text" name="psa" placeholder="PSA / RMM you use"/>
+          </div>
+          <textarea name="message" rows="5" placeholder="What kind of network work is piling up? (gear, number of clients, ticket volume)"></textarea>
+          <button class="btn btn-cyan" type="submit" style="min-height:50px; font-size:15px;">Send it over</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div class="brand"><img src="https://raw.githubusercontent.com/RiverOtterTech/river-otter-tech/main/logo.png" alt=""/><strong style="font-size:15px">River Otter Tech</strong></div>
+      <nav class="foot-links">
+        <a href="/services/">Services</a><a href="/how-it-works/">How it works</a><a href="/test-ticket/">Free test ticket</a><a href="/about/">About</a><a href="/business/">For businesses</a><a href="/contact/">Contact</a>
+      </nav>
+      <a class="mail" href="mailto:hello@riverottertech.com">hello@riverottertech.com</a>
+    </div>
+    <div class="wrap foot-copy mono">&copy; 2026 River Otter Tech &middot; White-label network ops for MSPs</div>
+  </footer>
+<script src="/assets/site.js"></script>
+</body>
+</html>
