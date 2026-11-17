@@ -89,8 +89,8 @@
     if (reduce) { lines.forEach(l => l.classList.add('on')); return; }
     function play() {
       lines.forEach(l => l.classList.remove('on'));
-      lines.forEach((l, i) => setTimeout(() => l.classList.add('on'), 500 + i * 520));
-      setTimeout(play, 500 + lines.length * 520 + 5000);
+      lines.forEach((l, i) => setTimeout(() => l.classList.add('on'), 400 + i * 380));
+      setTimeout(play, 400 + lines.length * 380 + 5000);
     }
     play();
   })();
