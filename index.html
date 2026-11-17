@@ -5,12 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>River Otter Tech | White-Label Network Engineering for MSPs</title>
 <meta name="description" content="River Otter Tech is a white-label network engineering partner for MSPs. Switching, wireless, and firewall tickets and projects, handled remotely under your brand."/>
+<link rel="canonical" href="https://riverottertech.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="River Otter Tech">
+<meta property="og:title" content="River Otter Tech | White-Label Network Engineering for MSPs">
+<meta property="og:description" content="River Otter Tech is a white-label network engineering partner for MSPs. Switching, wireless, and firewall tickets and projects, handled remotely under your brand.">
+<meta property="og:url" content="https://riverottertech.com/">
+<meta property="og:image" content="https://riverottertech.com/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#030c15">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"River Otter Tech","url":"https://riverottertech.com","logo":"https://riverottertech.com/logo.png","description":"White-label network engineering for MSPs: switching, wireless, and firewall tickets and projects handled remotely under your brand.","telephone":"+1-413-887-1790","email":"hello@riverottertech.com","address":{"@type":"PostalAddress","addressLocality":"Westfield","addressRegion":"MA","addressCountry":"US"},"areaServed":"US","founder":{"@type":"Person","name":"Jason Roy"}}</script>
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=754fc383">
+<link rel="stylesheet" href="/assets/site.css?v=4774a569">
 </head>
 <body>
   <div class="grid-bg"></div>
@@ -21,7 +31,7 @@
     <div class="wrap">
       <div class="nav-inner">
         <a class="brand" href="/">
-          <img src="https://raw.githubusercontent.com/RiverOtterTech/river-otter-tech/main/logo.png" alt="River Otter Tech logo"/>
+          <img src="/assets/logo-sm.png" alt="River Otter Tech logo"/>
           <div><strong>River Otter Tech</strong><span>WHITE-LABEL NETWORK OPS</span></div>
         </a>
         <nav class="nav-links">
@@ -76,12 +86,12 @@
           <div class="ln"><span class="p">core-sw01#</span> <span class="c">show vlan brief</span></div>
           <div class="ln"><span class="o">10  STAFF     active   Gi1/0/1-24</span></div>
           <div class="ln"><span class="o">20  VOICE     active   Gi1/0/1-24</span></div>
-          <div class="ln"><span class="w">30  GUEST     active   </span><span class="w">&larr; no ACL applied</span></div>
+          <div class="ln"><span class="w">30  GUEST     active   </span><span class="w">&larr; no ACL</span></div>
           <div class="ln"><span class="p">core-sw01#</span> <span class="c">conf t</span></div>
-          <div class="ln"><span class="p">core-sw01(config)#</span> <span class="c">apply guest-isolation vlan 30</span></div>
-          <div class="ln"><span class="ok">&#10003; Guest isolated &middot; internet only</span></div>
-          <div class="ln"><span class="ok">&#10003; Config backed up &middot; diagram updated</span></div>
-          <div class="ln"><span class="ok">&#10003; Notes posted to PSA as "Your MSP Network Team"</span></div>
+          <div class="ln"><span class="p">core-sw01(config)#</span> <span class="c">acl guest-iso vlan 30</span></div>
+          <div class="ln"><span class="ok">&#10003; Guest isolated, internet only</span></div>
+          <div class="ln"><span class="ok">&#10003; Config backed up, diagram updated</span></div>
+          <div class="ln"><span class="ok">&#10003; Notes posted to your PSA</span></div>
           <div class="ln"><span class="p">ticket#48213</span> <span class="c">status</span> <span class="ok">RESOLVED</span></div>
         </div>
       </div>
@@ -155,14 +165,14 @@
 
   <footer>
     <div class="wrap foot">
-      <div class="brand"><img src="https://raw.githubusercontent.com/RiverOtterTech/river-otter-tech/main/logo.png" alt=""/><strong style="font-size:15px">River Otter Tech</strong></div>
+      <div class="brand"><img src="/assets/logo-sm.png" alt=""/><strong style="font-size:15px">River Otter Tech</strong></div>
       <nav class="foot-links">
         <a href="/services/">Services</a><a href="/how-it-works/">How it works</a><a href="/test-ticket/">Free test ticket</a><a href="/about/">About</a><a href="/business/">For businesses</a><a href="/contact/">Contact</a>
       </nav>
       <a class="mail" href="mailto:hello@riverottertech.com">hello@riverottertech.com</a>
     </div>
-    <div class="wrap foot-copy mono">&copy; 2026 River Otter Tech &middot; White-label network ops for MSPs</div>
+    <div class="wrap foot-copy mono">&copy; 2026 River Otter Tech &middot; Westfield, MA &middot; White-label network ops for MSPs</div>
   </footer>
-<script src="/assets/site.js?v=754fc383"></script>
+<script src="/assets/site.js?v=4774a569"></script>
 </body>
 </html>
